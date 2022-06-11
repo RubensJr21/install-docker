@@ -13,16 +13,12 @@ if [ "$WINDOWS_VERSION" = "11" ]; then
     #Work only in Windows 11
     exists=$(ls -la /etc | grep wsl.conf)
     if [ -z "$exists" ]; then
-        echo "[boot]" > /temp/wsl.conf
-        echo "command = service docker start" >> /tmp/wsl.conf
-        cp /tmp/wsl.conf /etc/wsl.conf
-        echo "Arquivo de configuração do wsl criado"
+        echo "[boot]" >/etc/wsl.conf
+        echo "command = service docker start" >>/etc/wsl.conf
     else
         result=$(cat /etc/wsl.conf | grep -Po "command = service docker start")
         if [ -z "$result" ]; then
-            sudo echo "[boot]" >> /etc/wsl.conf
-            sudo echo "command = service docker start" >> /etc/wsl.conf
-            echo "Arquivo de configuração do wsl atualizado"
+            sudo echo -e "[boot]\ncommand = service docker start" >>/etc/wsl.conf
         fi
     fi
 elif [ "$WINDOWS_VERSION" = "10" ]; then
@@ -34,8 +30,7 @@ elif [ "$WINDOWS_VERSION" = "10" ]; then
     if [ -z "$result" ]; then
         cp /etc/sudoers /tmp/sudoers.bak
         #Command for executing service without password
-        echo ""
-        echo "$USER ALL=(ALL) NOPASSWD: /usr/sbin/service" >>/tmp/sudoers.bak
+        echo -e "\n$USER ALL=(ALL) NOPASSWD: /usr/sbin/service" >>/tmp/sudoers.bak
         visudo -cf /tmp/sudoers.bak
         if [ $? -eq 0 ]; then
             # Replace the sudoers file with the new only if syntax is correct.
