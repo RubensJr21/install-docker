@@ -11,17 +11,22 @@ WINDOWS_VERSION=$(systeminfo.exe | grep -Po "Windows ([0-9]{2})" | grep -Po "([0
 
 if [ "$WINDOWS_VERSION" = "11" ]; then
     #Work only in Windows 11
-    result=$(cat /etc/wsl.conf | grep -Po "[boot]\ncommand = service docker start")
-    if [ -z $result ]; then
-        echo -e "[boot]\ncommand = service docker start" >>/etc/wsl.conf
+    exists=$(ls -la /etc | grep wsl.conf)
+    if [ -z "$exists" ]; then
+        sudo echo -e "[boot]\ncommand = service docker start" >> /etc/wsl.conf
+    else
+        result=$(cat /etc/wsl.conf | grep -Po "command = service docker start")
+        if [ -z "$result" ]; then
+            sudo echo -e "[boot]\ncommand = service docker start" >>/etc/wsl.conf
+        fi
     fi
 elif [ "$WINDOWS_VERSION" = "10" ]; then
     #alternative for Windows 10
     #Return "" (empty) if not founded line in file
-    result=$(cat /etc/sudoers | grep -Po "\n$USER ALL=(ALL) NOPASSWD: /usr/sbin/service")
+    result=$(cat /etc/sudoers | grep -Po "$USER ALL=(ALL) NOPASSWD: /usr/sbin/service")
 
     #Verify if the command isn't in file
-    if [ -z $result ]; then
+    if [ -z "$result" ]; then
         cp /etc/sudoers /tmp/sudoers.bak
         #Command for executing service without password
         echo -e "\n$USER ALL=(ALL) NOPASSWD: /usr/sbin/service" >>/tmp/sudoers.bak
@@ -31,7 +36,7 @@ elif [ "$WINDOWS_VERSION" = "10" ]; then
             sudo cp /tmp/sudoers.bak /etc/sudoers
             result=$(cat ~/.bashrc | grep -Po "Genereted by Install-docker-on-wsl")
             # Case the line isn't in file put the commands
-            if [ -z $result ]; then
+            if [ -z "$result" ]; then
                 echo "" >>~/.bashrc
                 echo "Genereted by Install-docker-on-wsl (https://github.com/RubensJr21/install-docker-in-wsl)" >>~/.bashrc
                 echo '# Start Docker daemon automatically when logging in if not running.' >>~/.bashrc
