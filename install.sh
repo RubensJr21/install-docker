@@ -13,7 +13,7 @@ if [ "$WINDOWS_VERSION" = "11" ]; then
     #Work only in Windows 11
     exists=$(ls -la /etc | grep wsl.conf)
     if [ -z "$exists" ]; then
-        echo "[boot]" > /temp/wsl.conf
+        echo "[boot]" > /tmp/wsl.conf
         echo -e "command = service docker start" >> /tmp/wsl.conf
         cp /tmp/wsl.conf /etc/wsl.conf
     else
