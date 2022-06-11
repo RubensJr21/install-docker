@@ -1,7 +1,7 @@
 # Install-docker-on-wsl
 ### 1. :star: No ubuntu cole o seguinte comando:
 ```shell
-wget -q -O - https://raw.githubusercontent.com/RubensJr21/install-docker/main/install.sh 2>&1 | sudo bash -s $USER
+wget -q -O - https://raw.githubusercontent.com/RubensJr21/install-docker/main/install.sh 2>&1 | sudo --preserve-env=HOME,USER,PATH bash
 ```
 ### 2. :star2: Execute no terminal do windows:
 ```powershell
