@@ -39,7 +39,7 @@ elif [ "$WINDOWS_VERSION" = "10" ]; then
             # Case the line isn't in file put the commands
             if [ -z "$result" ]; then
                 echo "" >>~/.bashrc
-                echo "Genereted by Install-docker-on-wsl (https://github.com/RubensJr21/install-docker-in-wsl)" >>~/.bashrc
+                echo "# Genereted by Install-docker-on-wsl (https://github.com/RubensJr21/install-docker-in-wsl)" >>~/.bashrc
                 echo '# Start Docker daemon automatically when logging in if not running.' >>~/.bashrc
                 echo 'RUNNING=`ps aux | grep docker | grep -v grep`' >>~/.bashrc
                 echo 'if [ -z "$RUNNING" ]; then' >>~/.bashrc
