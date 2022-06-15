@@ -46,7 +46,7 @@ elif [ "$WINDOWS_VERSION" = "10" ]; then
                 echo '    sudo service docker start > /dev/null 2>&1 &' >>~/.bashrc
                 echo '    disown' >>~/.bashrc
                 echo 'fi' >>~/.bashrc
-                echo "========================================================================================" >>~/.bashrc
+                echo "# ========================================================================================" >>~/.bashrc
                 echo "" >>~/.bashrc
             fi
         fi
